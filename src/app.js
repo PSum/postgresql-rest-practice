@@ -32,20 +32,22 @@ app.post('/', async (req, res) => {
     }
 })
 
-app.get("/createdb", async(req, res) => {
-try {
-await pool.query(`
-    CREATE TABLE IF NOT EXISTS schools (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(100),
-        address VARCHAR(100)
-    )
-`);
-} catch (err) {
-    console.log(err);
-    res.sendStatus(500);
-}
-});
+//app.get("/createdb", async (req, res) => {
+    //try {
+        //await pool.query(`
+            //CREATE TABLE IF NOT EXISTS schools (
+                //id SERIAL PRIMARY KEY,
+                //name VARCHAR(100),
+                //address VARCHAR(100)
+            //)
+        //`);
+        //res.status(200).send({ message: "Table 'schools' created successfully or already exists." });
+    //} catch (err) {
+        //console.log(err);
+        //res.sendStatus(500);
+    //}
+//});
+
 
 
 app.get('/setup', async (req, res) => {
