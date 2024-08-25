@@ -7,9 +7,9 @@ const app = express()
 app.use(express.json())
 
 //routes
-app.get("/", (req, res) => {
-    res.send({name: "jon", age: 14})
-})
+//app.get("/", (req, res) => {
+//    res.send({name: "jon", age: 14})
+//})
 
 app.get('/', async (req, res) => {
     try {
@@ -32,33 +32,32 @@ app.post('/', async (req, res) => {
     }
 })
 
-//app.get("/createdb", async (req, res) => {
-    //try {
-        //await pool.query(`
-            //CREATE TABLE IF NOT EXISTS schools (
-                //id SERIAL PRIMARY KEY,
-                //name VARCHAR(100),
-                //address VARCHAR(100)
-            //)
-        //`);
-        //res.status(200).send({ message: "Table 'schools' created successfully or already exists." });
-    //} catch (err) {
-        //console.log(err);
-        //res.sendStatus(500);
-    //}
-//});
-
 
 
 app.get('/setup', async (req, res) => {
     try {
-        await pool.query('CREATE TABLE schools( id SERIAL PRIMARY KEY, name VARCHAR(100), address VARCHAR(100))')
-        res.status(200).send({ message: "Successfully created table" })
+        await pool.query(
+          "CREATE TABLE schools( id SERIAL PRIMARY KEY, name VARCHAR(100), address VARCHAR(100))"
+        );
+        res.status(200).send({ message: "Successfully created table" });
     } catch (err) {
         console.log(err)
         res.sendStatus(500)
     }
 })
 
+app.get("/deleteAll", async (req,res) => {
+    try{
+        await pool.query(
+            "DELETE FROM schools"
+        );
+        res.status(200).send({
+            message: "Sucessfully deleted all the content"
+        });
+    } catch (err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+})
 
 app.listen(port, () => console.log(`Server has started on port: ${port}`))

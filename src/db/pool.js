@@ -14,8 +14,7 @@ if (
   );
 }
 
-// All of the following properties should be read from environment variables
-// We're hardcoding them here for simplicity
+// All of the following properties are read from environment variables
 module.exports = new Pool({
   connectionString: `postgresql://${encodeURIComponent(
     process.env.USER
