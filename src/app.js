@@ -21,7 +21,28 @@ app.get('/', async (req, res) => {
     }
 })
 
+
+app.get('/findSchool', async (req, res) => {
+    const location = req.query.location;
+    // possible search query:
+    // localhost:3000/findSchool?location=Heitersheim
+    try {
+        const data = await pool.query('SELECT * FROM schools WHERE address = $1', [location]);
+        res.status(200).send(data.rows);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+
 app.post('/', async (req, res) => {
+    // possible post request with possible body:
+    // localhost:3000/
+    // {
+    //     "name":"Friedensschule",
+    //     "location": "Duesseldorf"
+    // }
     const { name, location } = req.body
     try {
         await pool.query('INSERT INTO schools (name, address) VALUES ($1, $2)', [name, location])
@@ -31,7 +52,6 @@ app.post('/', async (req, res) => {
         res.sendStatus(500)
     }
 })
-
 
 
 app.get('/setup', async (req, res) => {
